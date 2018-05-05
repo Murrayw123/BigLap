@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+    <script src="../static/scripts.js" type="text/javascript"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans|Quicksand" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../static/materialize.min.css"  media="screen,projection"/>
+  </head>
+  <body>
+
+  <!--
+  <header>
+	  <a href ="/login" class="waves-effect waves-light btn">Login</a>
+  	  <a href = "/register" class="waves-effect waves-light btn">Register</a>
+  </header>
+  -->
+
+
+	 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+     <script type="text/javascript" src="../static/materialize.min.js"></script>
+	 <script>$(document).ready(function() {
+ 	$('select').material_select();
+});</script>
+
+    <div id="map"> </div>
+	<script src="../static/scripts.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKLplL94Oeye2T5lkfIOupftKkrWA7qEo&callback=initMap">	</script>
+
+	 <script>
+		function initMap() {
+
+		var originlati = parseFloat('{{origin_lat}}'),
+		  originlngi = parseFloat('{{origin_lng}}'),
+		  destlati = parseFloat('{{dest_lat}}'),
+		  destlngi = parseFloat('{{dest_lng}}'),
+
+		  defaultcoord = {lat: -28.06, lng: 120},
+		  myOrigin = {lat: originlati, lng: originlngi},
+		  myDestination = {lat: destlati, lng: destlngi},
+		  mapOptions = {zoom: 5, center: defaultcoord},
+		  map = new google.maps.Map(document.getElementById('map'), mapOptions),
+		  directionsService = new google.maps.DirectionsService,
+		  directionsDisplay = new google.maps.DirectionsRenderer({
+			  map: map
+		  });
+
+		if (originlati) {
+		  var start = new google.maps.Marker({
+			  position: myOrigin,
+			  map: map,
+			  title: 'Departure'
+		  });
+
+		  var end = new google.maps.Marker({
+			  position: myDestination,
+			  map: map,
+			  title: 'End'
+		  });
+		  calculateAndDisplayRoute(directionsService, directionsDisplay, myOrigin, myDestination);
+		}
+		}
+
+		function calculateAndDisplayRoute(directionsService, directionsDisplay, myOrigin, myDestination) {
+		directionsService.route({
+			origin: myOrigin,
+			destination: myDestination,
+			avoidTolls: true,
+			avoidHighways: false,
+			travelMode: google.maps.TravelMode.DRIVING
+		}, function (response, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+				directionsDisplay.setDirections(response);
+			} else {
+				window.alert('Directions request failed due to ' + status);
+			}
+		});
+		}
+	 </script>
+
+	<div class = "POI ">
+		 <div class="card blue-grey lighten-4">
+			 <div class="card-content black-text">
+				 <h1> The Big Lap</h1>
+		<form action = "{{ url_for('save') }}" method = "POST">
+			<div class="input-field">
+				<input type="text" id="origin" class = "validate" name = "origin" required>
+				<label for ="origin">Origin</label>
+			</div>
+			<div class="input-field">
+				<input type="text" id="destination" class = "validate" name = "destination" required>
+				<label for ="destination">Destination</label>
+			</div>
+
+	<div class="input-field">
+		<select id = "fuel" name = "fuel">
+			{% for option in fuel_options %}
+				{% if option == fuel_type %}
+		  			<option value="{{option}}" selected>{{option}}</option>
+				{% else %}
+					<option value="{{option}}">{{option}}</option>
+				{% endif %}
+			{% endfor %}
+		</select>
+		<label>Fuel Type</label>
+  	</div>
+
+	<div class="input-field">
+		<select id = "economy" name = "economy">
+			{% for key, value in economy_options.items() %}
+				{% if key == economy %}
+		  			<option value="{{key}}" selected>{{value}}</option>
+				{% else %}
+					<option value="{{key}}">{{value}}</option>
+				{% endif %}
+			{% endfor %}
+		</select>
+		<label>Fuel Economy</label>
+  	</div>
+
+		<button class="submit btn waves-effect waves-light" type="submit" name="submit">Submit
+			<i class="material-icons right"></i>
+		</button>
+		</form>
+	</form>
+
+	{% if origin_lat %}
+		  {% with messages = get_flashed_messages() %}
+			  {% if messages %}
+				 <ul class=flashes>
+					{% for message in messages %}
+						<li>{{ message }}</li>
+					{% endfor %}
+				</ul>
+		 {% endif %}
+		{% endwith %}
+		 <form action="{{ url_for('index') }}">
+			<button class="btn waves-effect waves-light" type="submit" name="reset">Reset
+				<i class="material-icons right">replay</i>
+			</button>
+		 </form>
+
+	 	{% if current_user.is_authenticated %}
+			 <form action="{{ url_for('savedtrips') }}">
+				<button class="btn waves-effect waves-light" type="submit" name="Save">Save
+					<i class="material-icons right">library_add</i>
+				</button>
+			 </form>
+		 {% endif %}
+  	 {% endif %}
+
+	<div class="error">
+		{% if error %}
+		  <i class="material-icons" id="warning">warning </i> <p> {{error}}</p>
+		 {%endif%}
+	</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+  </body>
+</html>
+

@@ -1,0 +1,23 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+flask = "==0.12.2"
+flask-bcrypt = "==0.7.1"
+flask-login = "==0.4.1"
+flask-wtf = "==0.14.2"
+googlemaps = "==2.5.1"
+peewee = "==2.10.2"
+quokka-flask-login = "==0.3.0"
+wtforms = "==2.1"
+gunicorn = "*"
+requests = "*"
+
+
+[dev-packages]
+

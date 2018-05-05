@@ -1,0 +1,78 @@
+/* ------------------------------ CSS FOR THE HOME PAGE ---------------------------------- */
+
+html {
+    font-family: Quicksand, sans-serif;
+  }
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+}
+
+header {
+    position: absolute;
+    top: 5%;
+    right: 3%;
+}
+
+h1 {
+    color: #353535;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 48px;
+    font-weight: lighter;
+}
+
+.POI {
+    position: absolute;
+    top: 15%;
+    left: 3%;
+    z-index: 2;
+}
+
+p {
+    font-family: "Quicksand", sans-serif;
+    letter-spacing: 1.5px;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+.info {
+    text-align: left;
+    position: absolute;
+    top: 60%;
+    z-index: 2;
+}
+
+#warning {
+    float: left;
+    display: inline-block;
+    color: #E53935;
+}
+
+.submit {
+    margin-bottom: 10px;
+}
+
+.error {
+    display: inline-block;
+}
+
+.error p {
+    float: right;
+    padding-left: 10px;
+    font-family: sans-serif;
+}
+
+/* ------------------------------ CSS FOR THE LOGIN PAGE ---------------------------------- */
+
+.form_register {
+    padding-bottom: 0px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+

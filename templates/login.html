@@ -1,0 +1,22 @@
+<head>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+    <script src="../static/scripts.js" type="text/javascript"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans|Quicksand" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../static/materialize.min.css"  media="screen,projection"/>
+</head>
+
+<form method ="POST" action="" class="form">
+    {{ form.hidden_tag() }}
+    {% for field in form %}
+        <div class = "field ">
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <div class="notification error"> {{ error}} </div>
+                {% endfor %}
+            {% endif %}
+            {{ field(placeholder=field.label.text) }}
+        </div>
+    {% endfor %}
+    <button type="submit" id="submit">Login!</button>
+</form>
