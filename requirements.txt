@@ -24,7 +24,7 @@ pew==1.1.2
 pigar==0.7.1
 pipenv==9.0.1
 pipreqs==0.4.9
-psutil==5.3.1
+psutil==5.6.6
 pycodestyle==2.3.1
 pycparser==2.18
 pyflakes==1.6.0
